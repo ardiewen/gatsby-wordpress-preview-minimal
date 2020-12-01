@@ -15,7 +15,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     },
   } = await graphql(`
     query GET_ALL_PAGES {
-      allWpPage(filter: { status: { eq: "publish" } }) {
+      allWpPage {
         nodes {
           id
           uri

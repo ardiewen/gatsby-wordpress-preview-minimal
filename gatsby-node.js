@@ -7,6 +7,7 @@
 // You can delete this file if you're not using it
 
 const pageTemplate = require.resolve("./src/templates/page.js")
+const productTemplate = require.resolve("./src/templates/product.js")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const {
@@ -35,5 +36,37 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         },
       })
       reporter.info(`Page created: ${page.title} at ${page.uri}`)
+    })
+
+  const {
+    data: {
+      allWpProduct: { nodes: products },
+    },
+  } = await graphql(`
+    query GET_ALL_PRODUCTS {
+      allWpProduct {
+        nodes {
+          id
+          name
+          ... on WpSimpleProduct {
+            uri
+          }
+          ... on WpVariableProduct {
+            uri
+          }
+        }
+      }
+    }
+  `)
+
+  products &&
+    products.map(product => {
+      actions.createPage({
+        path: product.uri,
+        component: productTemplate,
+        context: {
+          id: product.id,
+        },
+      })
     })
 }

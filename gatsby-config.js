@@ -27,7 +27,8 @@ module.exports = {
         //   hardCacheMediaFiles: true,
         // },
         schema: {
-          perPage: 10,
+          requestConcurrency: 5,
+          previewRequestConcurrency: 2,
         },
       },
     },

@@ -3,13 +3,17 @@ import { resolve } from "path"
 
 const pageTemplate = resolve("./src/templates/page.tsx")
 
+interface Page {
+  node: {
+    id: string
+    uri: string
+    title: string
+  }
+}
+
 interface Data {
   allWpPage: {
-    nodes: Array<{
-      id: string
-      uri: string
-      title: string
-    }>
+    edges: Array<Page>
     totalCount: number
   }
 }
@@ -22,10 +26,12 @@ export async function createWpPages({
   const { data, errors } = await graphql<Data>(`
     query GET_ALL_PAGES {
       allWpPage {
-        nodes {
-          id
-          uri
-          title
+        edges {
+          node {
+            id
+            uri
+            title
+          }
         }
         totalCount
       }
@@ -33,15 +39,15 @@ export async function createWpPages({
   `)
 
   if (data) {
-    data.allWpPage.nodes.map(page => {
+    data.allWpPage.edges.map(({ node }) => {
       actions.createPage({
-        path: page.uri,
+        path: node.uri,
         component: pageTemplate,
         context: {
-          id: page.id,
+          id: node.id,
         },
       })
-      reporter.info(`Page created: ${page.title} at ${page.uri}`)
+      reporter.info(`Page created: ${node.title} at ${node.uri}`)
     })
     reporter.info(`TOTAL PAGES CREATED: ${data.allWpPage.totalCount}`)
   }

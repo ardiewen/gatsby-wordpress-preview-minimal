@@ -31,13 +31,13 @@ export async function createWpPosts({
   if (data) {
     data.allWpPost.nodes.map(post => {
       actions.createPage({
-        path: `/blog${post.uri}`,
+        path: post.uri,
         component: postTemplate,
         context: {
           id: post.id,
         },
       })
-      reporter.info(`Post created: ${post.title} at /blog/${post.uri}`)
+      reporter.info(`Post created: ${post.title} at ${post.uri}`)
     })
     reporter.info(`TOTAL POSTS CREATED: ${data.allWpPost.totalCount}`)
   }

@@ -19,9 +19,12 @@ export const plugins = [
     options: {
       url: process.env.GATSBY_GRAPHQL_URL,
       verbose: true,
-      schema: {
-        requestConcurrency: 5,
-        previewRequestConcurrency: 2,
+      // schema: {
+      //   requestConcurrency: 5,
+      //   previewRequestConcurrency: 2,
+      // },
+      debug: {
+        preview: true,
       },
     },
   },

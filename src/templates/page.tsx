@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql, PageProps } from "gatsby"
-import { Raw } from "../components/Elements"
+import { Raw, Button } from "../components/Elements"
 
 interface PageTemplateProps extends PageProps {
   data: {
@@ -17,7 +17,13 @@ interface PageTemplateProps extends PageProps {
 }
 
 export default function PageTemplate({ data }: PageTemplateProps) {
-  return <Raw>{JSON.stringify(data, null, 2)}</Raw>
+  return (
+    <>
+      <Button primary>Click Me</Button>
+      <Button>Test</Button>
+      <Raw>{JSON.stringify(data, null, 2)}</Raw>
+    </>
+  )
 }
 
 export const query = graphql`

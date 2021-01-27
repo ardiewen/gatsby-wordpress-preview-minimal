@@ -9,7 +9,6 @@ interface PostTemplateProps extends PageProps {
       slug: string
       uri: string
       title: string
-      isFrontPage: boolean
       content: string
     }
   }
@@ -21,13 +20,12 @@ export default function PostTemplate({ data }: PostTemplateProps) {
 
 export const query = graphql`
   query GET_POST($id: String!) {
-    wpPage(id: { eq: $id }) {
+    wpPost(id: { eq: $id }) {
       __typename
       id
       slug
       uri
       title
-      isFrontPage
       content
     }
   }
